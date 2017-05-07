@@ -19,7 +19,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     const { formatMessage } = this.props.intl;
     return (
       <Grid style={{ height: '100%' }} textAlign="center" verticalAlign="middle">
-        <Grid.Column computer={2} textAlign="left">
+        <Grid.Column widescreen computer={3} mobile={12} tablet={8} textAlign="left">
           <Form>
             <Form.Field>
               <input placeholder={formatMessage(messages.login)} />
