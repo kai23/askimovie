@@ -65,7 +65,13 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
           {this.showCapsMessage()}
           <Form>
             <Form.Field>
-              <input autoFocus name="loginInput" onKeyUp={this.checkFilled} placeholder={formatMessage(messages.login)} />
+              <input
+                autoFocus
+                type="email"
+                name="loginInput"
+                onKeyUp={this.checkFilled}
+                placeholder={formatMessage(messages.login)}
+              />
             </Form.Field>
             <Form.Field>
               <input
