@@ -10,7 +10,7 @@ import { loginFailed, loginSuccess } from './actions'
 import request from 'utils/request';
 
 export function* execLogin() {
-  const requestURL = '/api/signin'
+  const requestURL = '/api/user/login'
   try {
     const user = yield call(request, requestURL);
     yield put(loginSuccess(user));
@@ -22,7 +22,7 @@ export function* execLogin() {
 /**
  * Root saga manages watcher lifecycle
  */
-export function* githubData() {
+export function* loginSaga() {
   // Watches for LOAD_REPOS actions and calls execLogin when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
@@ -35,4 +35,4 @@ export function* githubData() {
 
 // Bootstrap sagas
 export default [
-  githubData,
+  loginSaga,

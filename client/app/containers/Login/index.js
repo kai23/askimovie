@@ -10,10 +10,13 @@
  */
 
 import React from 'react';
-import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Grid, Form, Checkbox, Button, Icon, Message } from 'semantic-ui-react';
+import { createStructuredSelector } from 'reselect';
 import messages from './messages';
+import { login } from './actions';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
@@ -31,12 +34,12 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     ;
   }
 
-  checkFilled = (ev) => {
+  handleChange = (ev) => {
     const field = ev.target.name;
     const value = ev.target.value;
     let capsLockOn = ev.getModifierState && ev.getModifierState('CapsLock');
     if (this.state.capsLockOn && capsLockOn && ev.keyCode === 20) capsLockOn = false;
-    this.setState({ [field]: !isEmpty(value), capsLockOn });
+    this.setState({ [field]: value, capsLockOn });
   }
 
   showCapsMessage() {
@@ -57,19 +60,19 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   }
 
   render() {
-    const { formatMessage } = this.props.intl;
+    const { onSubmitForm, intl: { formatMessage } } = this.props;
     const { loginInput, passwordInput, inputPasswordType } = this.state;
     return (
       <Grid style={{ height: '100%' }} textAlign="center" verticalAlign="middle">
         <Grid.Column computer={3} mobile={12} tablet={8} textAlign="left">
           {this.showCapsMessage()}
-          <Form>
+          <Form onSubmit={(e) => onSubmitForm(e, this.state)}>
             <Form.Field>
               <input
                 autoFocus
                 type="email"
                 name="loginInput"
-                onKeyUp={this.checkFilled}
+                onKeyUp={this.handleChange}
                 placeholder={formatMessage(messages.login)}
               />
             </Form.Field>
@@ -77,7 +80,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
               <input
                 type={inputPasswordType}
                 name="passwordInput"
-                onKeyUp={this.checkFilled}
+                onKeyUp={this.handleChange}
                 placeholder={formatMessage(messages.password)}
               />
               <Icon className="showPassword" name="eye" link onClick={this.toggleShowPassword} />
@@ -85,7 +88,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
             <Form.Field>
               <Checkbox label={formatMessage(messages.rememberme)} />
             </Form.Field>
-            <Button disabled={!loginInput || !passwordInput} type="submit"><FormattedMessage {...messages.submit} /> </Button>
+            <Button disabled={!loginInput || !passwordInput}><FormattedMessage {...messages.submit} /> </Button>
           </Form>
         </Grid.Column>
       </Grid>
@@ -95,6 +98,19 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
 HomePage.propTypes = {
   intl: intlShape.isRequired,
+  onSubmitForm: PropTypes.func.isRequired,
 };
 
-export default injectIntl(HomePage);
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onSubmitForm: (evt, { loginInput, passwordInput }) => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(login(loginInput, passwordInput));
+    },
+  };
+}
+
+const mapStateToProps = createStructuredSelector({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(HomePage));
