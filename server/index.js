@@ -8,8 +8,9 @@ const app = express();
 app.use(bodyParser.json());
 
 each(routes, (route) => {
-  app.use(route.path, route.action);
-  console.info(`Listenning ${route.path}`);
+  const method = route.method.toLowerCase();
+  app[method](route.path, route.action);
+  console.info(`Route [${route.method.toUpperCase()}] - ${route.path} is alive`);
 });
 
 
