@@ -37,6 +37,13 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
+  options.headers = {
+    'Content-Type': 'application/json',
+  };
+
+  if (options.body) {
+    options.body = JSON.stringify(options.body);
+  }
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON);
