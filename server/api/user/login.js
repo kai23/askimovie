@@ -3,8 +3,8 @@ const PlexAPI = require('plex-api');
 const plexConfig = require('../../config.json').plex;
 const cookieConfig = require('../../config.json').cookie;
 
-function loginWithPlex(email, password) {
-  const options = Object.assign(plexConfig.options, { username: email, password });
+function loginWithPlex(username, password) {
+  const options = Object.assign(plexConfig.options, { username, password });
   const client = new PlexAPI(options);
   return client.query('/');
 }
@@ -27,11 +27,11 @@ module.exports = async (req, res, next) => {
       req.response = { status: 'member' };
     } else if (err.message === 'Authentication failed, reason: Invalid status code in authentication response from Plex.tv, expected 201 but got 401') {
       res.status(401);
-      req.response = { status: 'authentication failed' };
+      req.response = { status: 'AUTHENTICATION_FAILED' };
     } else {
       console.error('err', err);
       res.status(500);
-      req.response = { status: 'unexpected error' };
+      req.response = { status: 'UNEXPECTED_ERROR' };
     }
   } finally {
     console.log('req.response', req.response);

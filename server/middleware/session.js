@@ -13,7 +13,6 @@ async function get(req, res, next) {
       const sessionDB = await knex('session')
         .where({ sid, expired: false })
         .andWhere('expired_at', '>', +new Date());
-      console.log('sessionDB', sessionDB);
       if (sessionDB.length) session = JSON.parse(sessionDB[0].session);
       else res.clearCookie(cookies[cookieConf.name]);
       req.session = session;
@@ -30,7 +29,8 @@ async function get(req, res, next) {
 
 async function set(req, res, next) {
   const sessionToSave = pick(req.session, 'user');
-  if (!Object.keys(sessionToSave).length) next();
+  console.log('sessionToSave', sessionToSave);
+  if (!Object.keys(sessionToSave).length) return next();
 
   // J'ai bien une session à sauver en DB
   const sid = req.session.sid;
@@ -42,10 +42,22 @@ async function set(req, res, next) {
     sid,
     session: JSON.stringify(sessionToSave),
     expired: false,
-    expired_at: (parseInt(+new Date()) + parseInt(additionalTime)),
+    expired_at: (parseInt(+new Date(), 10) + parseInt(additionalTime, 10)),
   };
   try {
-    await knex('session').insert(dto);
+    // D'abord on cherche si la clef existe
+    const session = await knex('session').where('sid', dto.sid);
+    if (!session || !session.length) {
+      console.log("J'insère pour la premier fois");
+      // Première insertion en base
+      await knex('session').insert(dto);
+    } else {
+      // Mise à jour
+      console.log('Je mets à jour');
+      await knex('session')
+        .where('sid', dto.sid)
+        .update({ session: JSON.stringify(sessionToSave) });
+    }
   } catch (err) {
     console.error(err);
   } finally {
