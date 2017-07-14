@@ -4,11 +4,12 @@ import {
   LOGIN_SUCCESS,
 } from './constants';
 
-export function login(email, password) {
+export function login(username, password, remember) {
   return {
     type: LOGIN_START,
-    email,
+    username,
     password,
+    remember,
   };
 }
 

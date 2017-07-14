@@ -23,6 +23,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     loginInput: false,
     passwordInput: false,
     capsLockOn: false,
+    rememberMeInput: false,
     inputPasswordType: 'password',
   }
 
@@ -34,9 +35,9 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     ;
   }
 
-  handleChange = (ev) => {
-    const field = ev.target.name;
-    const value = ev.target.value;
+  handleChange = (ev, data) => {
+    const field = ev.target.name || data.name;
+    const value = ev.target.value || data.checked;
     let capsLockOn = ev.getModifierState && ev.getModifierState('CapsLock');
     if (this.state.capsLockOn && capsLockOn && ev.keyCode === 20) capsLockOn = false;
     this.setState({ [field]: value, capsLockOn });
@@ -47,7 +48,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       return (<Message attached="bottom" warning>
         <Message.Content>
           <Icon name="warning sign" /> Le verrouillage des majuscules est activé
-            </Message.Content>
+        </Message.Content>
       </Message>
       );
     }
@@ -70,7 +71,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
             <Form.Field>
               <input
                 autoFocus
-                type="email"
+                type="text"
                 name="loginInput"
                 onKeyUp={this.handleChange}
                 placeholder={formatMessage(messages.login)}
@@ -86,7 +87,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
               <Icon className="showPassword" name="eye" link onClick={this.toggleShowPassword} />
             </Form.Field>
             <Form.Field>
-              <Checkbox label={formatMessage(messages.rememberme)} />
+              <Checkbox name="rememberMeInput" onChange={this.handleChange} label={formatMessage(messages.rememberme)} />
             </Form.Field>
             <Button disabled={!loginInput || !passwordInput}><FormattedMessage {...messages.submit} /> </Button>
           </Form>
@@ -104,9 +105,9 @@ HomePage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onSubmitForm: (evt, { loginInput, passwordInput }) => {
+    onSubmitForm: (evt, { loginInput, passwordInput, rememberMeInput }) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(login(loginInput, passwordInput));
+      dispatch(login(loginInput, passwordInput, rememberMeInput));
     },
   };
 }

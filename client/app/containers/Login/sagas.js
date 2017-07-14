@@ -9,11 +9,11 @@ import { LOGIN_START } from './constants';
 import { loginFailed, loginSuccess } from './actions';
 
 
-export function* execLogin({ email, password }) {
-  const requestURL = '/api/user/login';
+export function* execLogin({ username, password, remember }) {
+  const requestURL = '/v1.0/user/login';
   const options = {
     method: 'POST',
-    body: { email, password },
+    body: { username, password, remember },
   };
   try {
     const user = yield call(request, requestURL, options);
