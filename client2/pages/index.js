@@ -139,8 +139,7 @@ class HomePage extends React.Component {
     const { usernameInput, passwordInput, inputPasswordType, status, busy } = this.state;
     console.log('this.props', this.props);
     return (
-      <LayoutLogin>
-        <Grid style={{ height: '100vh' }} textAlign="center" verticalAlign="middle">
+      <Grid style={{ height: '100vh' }} textAlign="center" verticalAlign="middle">
           <Grid.Column computer={3} mobile={12} tablet={8} textAlign="left">
             {this.showMessage()}
             <Form onSubmit={this.onSubmitForm}>
@@ -178,9 +177,8 @@ class HomePage extends React.Component {
             </Form>
           </Grid.Column>
         </Grid>
-      </LayoutLogin>
     );
   }
 }
 
-export default HomePage;
+export default LayoutLogin(HomePage);
