@@ -19,7 +19,7 @@ import { login as loginAction } from '../../actions/login.js';
 
 import './Login.css';
 
-class Login extends React.Component {
+class Login extends React.PureComponent {
   state = {
     loginInput: false,
     passwordInput: false,
@@ -30,7 +30,6 @@ class Login extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('In componentWillReceiveProps -> nextProps', nextProps);
   }
 
 
@@ -38,7 +37,8 @@ class Login extends React.Component {
     return nextState.loginInput !== this.state.loginInput ||
       nextState.passwordInput !== this.state.passwordInput ||
       nextState.capsLockOn !== this.state.capsLockOn ||
-      nextState.inputPasswordType !== this.state.inputPasswordType
+      nextState.inputPasswordType !== this.state.inputPasswordType ||
+      nextProps !== this.props
     ;
   }
 
@@ -75,13 +75,13 @@ class Login extends React.Component {
       let message = 'Une erreur inconnue est survenue';
 
       if (this.props.loginError.status === 'AUTHENTICATION_FAILED') {
-        message = "Le nom d'uuutilisateur ou le mot de passe est incorrect";
+        message = "Le nom d'utilisateur ou le mot de passe est incorrect";
       }
 
       return (
-        <Message attached="bottom" warning>
+        <Message attached="bottom" error>
           <Message.Content>
-            <Icon name="warning sign" /> {message}
+            <Icon name="exclamation circle" /> {message}
           </Message.Content>
         </Message>
       );
@@ -96,7 +96,6 @@ class Login extends React.Component {
 
   render() {
     const { loginInput, passwordInput, inputPasswordType } = this.state;
-    console.log('In render -> props : ', this.props);
     return (
       <Grid style={{ height: '100%' }} textAlign="center" verticalAlign="middle">
         <Grid.Column computer={3} mobile={12} tablet={8} textAlign="left">
