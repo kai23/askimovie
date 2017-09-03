@@ -50,7 +50,14 @@ ReactDOM.render(
 
 if (module.hot) {
   module.hot.accept('./containers/App/App.js', () => {
-    ReactDOM.render(<App />, document.getElementById('root'));
+    ReactDOM.render(
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </Provider>,
+      document.getElementById('root'),
+    );
   });
 }
 

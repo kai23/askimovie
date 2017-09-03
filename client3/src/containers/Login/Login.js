@@ -30,8 +30,10 @@ class Login extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.loginSuccess) {
+      nextProps.history.push('/');
+    }
   }
-
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.loginInput !== this.state.loginInput ||
@@ -141,10 +143,15 @@ class Login extends React.PureComponent {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
 
+  loginSuccess: PropTypes.bool.isRequired,
   loginFailed: PropTypes.bool.isRequired,
   loginLoading: PropTypes.bool.isRequired,
   loginError: PropTypes.shape({
     status: PropTypes.string,
+  }).isRequired,
+
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
 
