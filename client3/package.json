@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "history": "^4.7.2",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-router-redux": "next",
     "react-scripts": "1.0.12",
     "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.15.6",
-    "semantic-ui-react": "^0.72.0"
+    "semantic-ui-react": "^0.72.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "PORT=3025 react-scripts start",

@@ -7,7 +7,7 @@ const getSessionInitialState = {
   getSessionError: {},
 };
 
-const app = (state = [], action) => {
+export default function app(state = getSessionInitialState, action) {
   switch (action.type) {
     case GET_SESSION_LOADING:
       return { ...state, ...getSessionInitialState, getSessionLoading: true };
@@ -20,6 +20,4 @@ const app = (state = [], action) => {
     default:
       return state;
   }
-};
-
-export default app;
+}
