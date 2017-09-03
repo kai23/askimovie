@@ -20,7 +20,6 @@ async function get(req, res, next) {
       req.session = {};
     }
   } catch (err) {
-    console.error(err);
     req.session = {};
   } finally {
     next();
@@ -29,7 +28,6 @@ async function get(req, res, next) {
 
 async function set(req, res, next) {
   const sessionToSave = pick(req.session, 'user');
-  console.log('sessionToSave', sessionToSave);
   if (!Object.keys(sessionToSave).length) return next();
 
   // J'ai bien une session à sauver en DB
