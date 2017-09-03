@@ -1,3 +1,12 @@
-import app from './app';
+import { all, fork } from 'redux-saga/effects';
 
-export default app;
+import app from './app.js';
+import login from './login.js';
+
+
+export default function* root() {
+  yield all([
+    fork(app),
+    fork(login),
+  ]);
+}
