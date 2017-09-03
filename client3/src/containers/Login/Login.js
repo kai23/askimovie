@@ -30,7 +30,7 @@ class Login extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
+    console.log('In componentWillReceiveProps -> nextProps', nextProps);
   }
 
 
@@ -96,7 +96,7 @@ class Login extends React.Component {
 
   render() {
     const { loginInput, passwordInput, inputPasswordType } = this.state;
-    console.log('in render');
+    console.log('In render -> props : ', this.props);
     return (
       <Grid style={{ height: '100%' }} textAlign="center" verticalAlign="middle">
         <Grid.Column computer={3} mobile={12} tablet={8} textAlign="left">
