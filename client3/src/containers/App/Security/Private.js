@@ -6,15 +6,19 @@ import { connect } from 'react-redux';
 import { Loader } from 'semantic-ui-react';
 import { Route, Redirect } from 'react-router-dom';
 
+import Layout from '../Layouts/Back';
 
-const Private = ({ component: Component, hasSession, authenticated, ...rest }) => {
+const Private = ({ component, hasSession, authenticated, ...rest }) => {
   if (hasSession) {
     return (
       <Route
         {...rest}
-        render={props => (authenticated === true
-          ? <Component {...props} />
-          : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />)} // eslint-disable-line react/prop-types
+        render={
+          props => (authenticated === true
+            ? <Layout component={component} props={props} />
+            : <Redirect to={{ pathname: '/login', state: { from: props.location } }
+            }
+            />)} // eslint-disable-line react/prop-types
       />
     );
   }

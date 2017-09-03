@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Private from './Private';
-import NeedNotConnected from './NeedNotConnected';
+import Private from './Security/Private';
+import NeedNotConnected from './Security/NeedNotConnected';
 
 import Login from '../Login/Login.js';
-import Home from '../Home/home.js';
+import Home from '../Home/Home.js';
 
 
 import './App.css';
