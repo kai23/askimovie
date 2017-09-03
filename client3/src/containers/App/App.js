@@ -1,13 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+
+import Private from './Private';
+
 import Login from '../Login/Login.js';
+import Home from '../Home/home.js';
+
 
 import './App.css';
 
 const App = () => (
-  <Router>
-    <Route exact path="/" component={Login} />
-  </Router>
+  <div className="full-height">
+    <Private exact path="/" component={Home} />
+    <Route path="/login" component={Login} />
+  </div>
 );
 
 export default App;
