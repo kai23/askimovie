@@ -24,6 +24,7 @@
 }
 
 .search__info {
+  position: absolute;
   font-size: 90%;
   font-weight: bold;
   display: block;
@@ -31,4 +32,21 @@
   margin: 0 auto;
   padding: 0.85em 0;
   text-align: right;
+  right: 13px;
+}
+
+.search__done {
+  position: absolute;
+  font-size: 90%;
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.85em 0;
+  text-align: left;
+}
+
+.searchTerms {
+  color: #E3891C;
+  font-style: italic;
 }
