@@ -6,8 +6,12 @@
   height: 100%;
 }
 
-.container {
-  background-color: #171212;
+body {
+  background: #222c35; /* Old browsers */
+  background: -moz-linear-gradient(left, #222c35 0%, #384d5b 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #222c35 0%,#384d5b 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #222c35 0%,#384d5b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222c35', endColorstr='#384d5b',GradientType=1 ); /* IE6-9 */
 }
 
 .content {

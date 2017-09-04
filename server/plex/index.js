@@ -39,8 +39,8 @@ class PlexAPI {
       const plexResults = await request(`/hubs/search?sectionId=&query=${query}`, { token: this.token }, this.getPlexUrl());
       const resultsFiltered = plexResults.MediaContainer.Hub.filter(h => parseInt(h.size, 10) > 0 && (h.type === 'movie' || h.type === 'show'));
       const resultsOK = resultsFiltered.map((hub) => {
-        if (hub.type === 'show') return [...hub.Directory];
-        return [...hub.Video];
+        if (hub.type === 'show') return hub.Directory;
+        return hub.Video;
       });
 
       return flatten(resultsOK);
