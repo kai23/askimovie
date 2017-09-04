@@ -56,6 +56,15 @@
   font-style: italic;
 }
 
+.results {
+  margin-top: 30px;
+  text-align: left;
+}
+
+.media {
+  margin-bottom: 40px !important;
+}
+
 .media-poster {
   margin-bottom: 10px;
   -webkit-box-shadow: 0px 0px 44px 0px rgba(0,0,0,0.75);
@@ -84,11 +93,6 @@
   overflow: hidden;
   width: 100%;
   display: block;
-}
-
-.results {
-  margin-top: 30px;
-  text-align: left;
 }
 
 .media-type-tv {
@@ -137,6 +141,22 @@
   border-radius: 5px;
   font-size: 1.1rem;
   margin-left: 10px;
+}
+
+.media-buttons {
+  position: relative;
+  top: -15px;
+}
+
+.media-ask {
+  background-color: #E3891C !important;
+  color: white !important;
+}
+
+.media-ask-disabled {
+  background-color: #9D5F13 !important;
+  color: white !important;
+  cursor: inherit;
 }
 
 .media-inPlex:hover {
