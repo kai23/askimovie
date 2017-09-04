@@ -102,6 +102,17 @@
   font-size: 1.1rem;
 }
 
+.media-year {
+  border: 1px white solid;
+  text-align: center;
+  width: 50px;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  margin-left: 10px;
+}
 
 .media-type-movie {
   border: 1px red solid;
@@ -152,4 +163,37 @@
     box-shadow: -2px 36px 95px 4px rgba(0, 0, 0, 0.7);
     height: 250px !important;
   }
+
+  .search__done, .search__info {
+    display: none;
+  }
+
+  .media-rating {
+    display: none;
+  }
 }
+
+@media screen and (max-width: 400px) {
+  .media-poster {
+    margin-bottom: 10px;
+    box-shadow: -2px 36px 95px 4px rgba(0, 0, 0, 0.7);
+    height: 250px !important;
+  }
+
+  .search__input.searching {
+    border: 0;
+    background: transparent;
+    border-radius: 0;
+    -webkit-appearance: none;
+    font-family: inherit;
+    font-size: 5vw;
+    line-height: 1;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 0 0.1em 0;
+    color: inherit;
+    border-bottom: 1px solid #E3891C;
+  }
+}
+

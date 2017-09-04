@@ -71,7 +71,7 @@ class Home extends React.Component {
             <span className="search__done">
               {search.length > 0 && 'Votre recherche pour '}
               <span className="searchTerms">{search}</span>
-              {searchResults && searchResults.total_results > 0 && ` (${searchResults.total_results} résultats)`}
+              {searchResults && searchResults.total_results > 0 && `  (${searchResults.total_results} résultats)`}
             </span>
           </Grid.Column>
         </Grid.Row>
