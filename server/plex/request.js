@@ -2,9 +2,10 @@ const request = require('request');
 const parser = require('xml2json');
 
 function buildURL(url, endpoint, plexHeaders, other) {
-  const plexHeadersString = Object.keys(plexHeaders)
+  let plexHeadersString = Object.keys(plexHeaders)
     .reduce((prev, curr) => `${prev}&${curr}=${encodeURIComponent(plexHeaders[curr])}`, '');
-  return `${url + endpoint}?${plexHeadersString}`;
+  plexHeadersString = plexHeadersString.substring(1);
+  return `${url + endpoint}${endpoint.indexOf('?') > -1 ? '&' : '?'}${plexHeadersString}`;
 }
 
 function resultToJson(result) {
@@ -23,6 +24,10 @@ module.exports = (endpoint, options, url = 'https://plex.tv/api/v2') =>
       'X-Plex-Device-Name': 'Plex Web Chrome',
       'X-Plex-Device-Screen-Resolution': '1920x940 1920x1080',
     };
+
+    if (options.token) {
+      queryParams['X-Plex-Token'] = options.token;
+    }
     const urlToQuery = buildURL(url, endpoint, queryParams);
     const method = (options.method || 'GET').toLowerCase();
 

@@ -1,4 +1,4 @@
-const PlexAPI = require('plex-api');
+const PlexAPI = require('../../plex');
 const plexConfig = require('../../config.json').plex;
 
 const { moviedb } = require('../../config.json');
@@ -14,17 +14,8 @@ function search(query) {
 }
 
 function searchPlex(query) {
-  const options = Object.assign(plexConfig.options, { token: plexConfig.token });
-  const client = new PlexAPI(options);
-
-  return new Promise((resolve, reject) => {
-    client.find('/library/sections', { type: 'movie|shows' }).then((directories) => {
-      console.log('directories', directories);
-    }, (err) => {
-      console.error('Could not connect to server', err);
-      reject(err);
-    });
-  });
+  const plexClient = new PlexAPI(Object.assign(plexConfig.options, { token: plexConfig.token }));
+  return plexClient.search(query);
 }
 
 module.exports = async (req, res, next) => {
@@ -33,6 +24,28 @@ module.exports = async (req, res, next) => {
     const foundPlex = await searchPlex(query);
     const found = await search(query);
 
+    const resultsMerged = found.results.map((f) => {
+      const plexMatch = foundPlex.filter((fp) => {
+        if (fp.type === 'show' && f.media_type === 'tv') {
+          if (fp.title === f.name && f.first_air_date === fp.originallyAvailableAt) {
+            return fp;
+          }
+        }
+        if (fp.type === 'movie' && f.media_type === 'movie') {
+          if (fp.title === f.title && f.release_date === fp.originallyAvailableAt) {
+            return fp;
+          }
+        }
+      });
+
+      f.inPlex = false;
+      if (plexMatch.length) {
+        f.inPlex = true;
+      }
+      return f;
+    });
+
+    found.results = resultsMerged;
     req.response = found;
   } catch (err) {
     res.status(401);

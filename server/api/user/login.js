@@ -29,6 +29,7 @@ module.exports = async (req, res, next) => {
       res.status(401);
       req.response = { status: 'AUTHENTICATION_FAILED' };
     } else {
+      console.error(err);
       res.status(500);
       req.response = { status: 'UNEXPECTED_ERROR' };
     }

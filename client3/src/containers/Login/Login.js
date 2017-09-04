@@ -30,7 +30,7 @@ class Login extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.loginSuccess) {
+    if (nextProps.loginSuccess && !this.props.loginSuccess) {
       nextProps.history.push('/');
     }
   }

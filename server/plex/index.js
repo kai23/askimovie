@@ -1,12 +1,14 @@
 const request = require('./request.js');
+const flatten = require('lodash/flatten');
 
 class PlexAPI {
   constructor(options) {
     this.host = options.hostname;
     this.port = options.port || 32400;
+    this.token = options.token || null;
   }
 
-  _getPlexUrl() {
+  getPlexUrl() {
     return `http://${this.host}:${this.port}`;
   }
 
@@ -28,6 +30,22 @@ class PlexAPI {
       }
     } else {
       return userFound.user;
+    }
+  }
+
+  async search(query) {
+    if (!query) throw Error('PlexAPI - search - query missing');
+    try {
+      const plexResults = await request(`/hubs/search?sectionId=&query=${query}`, { token: this.token }, this.getPlexUrl());
+      const resultsFiltered = plexResults.MediaContainer.Hub.filter(h => parseInt(h.size, 10) > 0 && (h.type === 'movie' || h.type === 'show'));
+      const resultsOK = resultsFiltered.map((hub) => {
+        if (hub.type === 'show') return [...hub.Directory];
+        return [...hub.Video];
+      });
+
+      return flatten(resultsOK);
+    } catch (err) {
+      throw Error(`PLEX_ERROR : ${err.message}`);
     }
   }
 }
