@@ -5,6 +5,10 @@ const getSessionInitialState = {
   getSessionFailed: false,
   getSessionSuccess: false,
   getSessionError: {},
+  user: {
+    username: '',
+    thumb: '',
+  },
 };
 
 export default function app(state = getSessionInitialState, action) {
