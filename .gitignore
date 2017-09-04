@@ -1,0 +1,26 @@
+# server
+server/node_modules
+server/config.json
+
+
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+client3/node_modules
+
+# testing
+client3/coverage
+
+# production
+client3/build
+
+# misc
+client3/.DS_Store
+client3/.env.local
+client3/.env.development.local
+client3/.env.test.local
+client3/.env.production.local
+
+client3/npm-debug.log*
+client3/yarn-debug.log*
+client3/yarn-error.log*
