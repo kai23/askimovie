@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import { Segment, Icon } from 'semantic-ui-react';
 
 
-const Layout = ({ component: Component, props, logout }) => (
+const Layout = ({ component: Component, props, user, logout }) => (
   <div className="full-height container">
     <div className="top-menu">
       <span className="top-menu-company"> Askimovie </span>
       <div className="top-menu-right">
         <div className="top-menu-item">
           <Icon name="sign out" /> Déconnexion
+        </div>
+        <div className="top-menu-item">
+          <img alt="profil" src={user.thumb} className="user-thumb" />
         </div>
       </div>
     </div>

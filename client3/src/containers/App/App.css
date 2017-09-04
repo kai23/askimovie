@@ -25,7 +25,17 @@
   color: white;
 }
 
+.top-menu-item {
+  float: right;
+  margin-right: 15px;
+}
 .top-menu-right {
   float: right;
   margin-right: 40px;
+}
+
+.user-thumb {
+  border-radius: 50%;
+  height: 30px;
+  margin-top: -5px;
 }

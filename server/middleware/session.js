@@ -31,7 +31,7 @@ async function set(req, res, next) {
   if (!Object.keys(sessionToSave).length) return next();
 
   // J'ai bien une session à sauver en DB
-  const sid = req.session.sid;
+  const sid = req.session.sid || req.cookies[cookieConf.name];
   const additionalTime = req.body && req.body.remember && req.url.includes('login') ?
       cookieConf.long :
       cookieConf.short;
@@ -46,7 +46,6 @@ async function set(req, res, next) {
     // D'abord on cherche si la clef existe
     const session = await knex('session').where('sid', dto.sid);
     if (!session || !session.length) {
-      console.log("J'insère pour la premier fois");
       // Première insertion en base
       await knex('session').insert(dto);
     } else {

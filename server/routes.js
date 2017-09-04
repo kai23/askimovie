@@ -12,7 +12,7 @@ module.exports = [{
   action: userSession,
   method: 'GET',
 }, {
-  path: `${prefix}/v1.0/media/search`,
+  path: `${prefix}/v1.0/media/search/:query`,
   action: mediaSearch,
   method: 'GET',
 }];
