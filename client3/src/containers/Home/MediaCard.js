@@ -8,7 +8,7 @@ const type = {
   movie: 'Film',
 };
 
-const MediaCard = ({ media }) => (
+const MediaCard = ({ media, requestMedia }) => (
   <Grid.Column className="media" computer={3} tablet={5} mobile={9} textAlign="left">
     <Image className="media-poster" centered fluid src={media.poster_full_path} spaced />
     <div className="media-content">
@@ -33,19 +33,19 @@ const MediaCard = ({ media }) => (
         <p><i>{media.original_name || media.original_title}</i></p>
       </div>
       <div className="media-rating">
-        <Rating icon="star" maxRating={10} disabled rating={media.vote_average} mini /> ({media.vote_count} votes)
+        <Rating icon="star" maxRating={10} disabled rating={media.vote_average} /> ({media.vote_count} votes)
       </div>
     </div>
     <div className="media-buttons">
       <Button.Group>
-        <Button basic color="orange" inverted>Plus d'infos</Button>
+        <Button basic color="orange" inverted>Plus d&apos;infos</Button>
         <Button.Or text="ou" />
         {media.inPlex ? (
           <Popup
             trigger={<Button className="media-ask-disabled">Demander</Button>}
           > C&apos;est déjà présent sur le plex, impossible de le demander
           </Popup>
-        ) : (<Button className="media-ask">Demander</Button>)}
+        ) : (<Button className="media-ask" onClick={() => requestMedia(media.id)} >Demander</Button>)}
 
       </Button.Group>
 

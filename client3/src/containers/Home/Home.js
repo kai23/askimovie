@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Grid, Loader } from 'semantic-ui-react';
 import classnames from 'classnames';
 import { search as searchAction } from '../../actions/search.js';
+import { request as requestAction } from '../../actions/request.js';
 
 import MediaCard from './MediaCard.js';
 import './Home.css';
@@ -32,7 +33,9 @@ class Home extends React.Component {
   showResults = () => {
     const { searchSuccess, searchResults } = this.props;
     if (searchSuccess && searchResults.total_results > 0) {
-      return searchResults.results.map(media => (<MediaCard media={media} />));
+      return searchResults.results.map(media => (
+        <MediaCard key={media.id} requestMedia={this.requestMedia} media={media} />
+      ));
     }
     return '';
   }
@@ -44,9 +47,15 @@ class Home extends React.Component {
     return '';
   }
 
+  requestMedia = (mediaId) => {
+    console.log('mediaId', mediaId);
+    this.props.request(mediaId);
+  }
+
   render() {
     const { search } = this.state;
     const { searchLoading, searchSuccess, searchResults } = this.props;
+    const { requestLoading, requestSuccess } = this.props;
     return (
       <Grid
         className="full-height homepage"
@@ -101,6 +110,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   search: query => dispatch(searchAction(query)),
+  request: mediaId => dispatch(requestAction(mediaId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

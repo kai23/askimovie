@@ -10,12 +10,11 @@ function loginWithPlex(username, password) {
 
 
 module.exports = async (req, res, next) => {
-  console.log('je suis un');
   const { username, password, remember } = req.body;
   try {
     const user = await loginWithPlex(username, password);
-    console.log('user', user);
     req.session.user = {
+      id: user.uuid,
       username,
       thumb: user.thumb,
       authToken: user.authToken,

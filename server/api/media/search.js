@@ -1,5 +1,6 @@
 const PlexAPI = require('../../plex');
 const plexConfig = require('../../config.json').plex;
+const uniq = require('lodash/uniq');
 
 const { moviedb } = require('../../config.json');
 const mdb = require('moviedb')(moviedb.key);
@@ -34,6 +35,8 @@ module.exports = async (req, res, next) => {
     const mdbConfig = await getConfiguration();
     const foundPlex = await searchPlex(query);
     const found = await search(query);
+    const request = await knex('request').then(r => uniq(r.map(r2 => r2.media_id)));
+
     const resultsMerged = found.results.filter((f) => {
       const plexMatch = foundPlex.filter((fp) => {
         if (fp.type === 'show' && f.media_type === 'tv') {
@@ -47,6 +50,11 @@ module.exports = async (req, res, next) => {
           }
         }
       });
+
+      f.isRequested = false;
+      if (request.indexOf(f.id) !== -1) {
+        f.isRequested = true;
+      }
 
       f.inPlex = false;
       if (plexMatch.length) {
