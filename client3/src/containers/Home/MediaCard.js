@@ -9,7 +9,7 @@ const type = {
   movie: 'Film',
 };
 
-const MediaCard = ({ media, requestMedia }) => (
+const MediaCard = ({ busy, media, requestMedia }) => (
   <Grid.Column className="media" computer={3} tablet={5} mobile={9} textAlign="left">
     <Image className="media-poster" centered fluid src={media.poster_full_path} spaced />
     <div className="media-content">
@@ -59,7 +59,7 @@ const MediaCard = ({ media, requestMedia }) => (
         > La demande a déjà été faite
         </Popup>)}
 
-        {!media.inPlex && !media.isRequested && (<Button className="media-ask" onClick={() => requestMedia(media.id)} >Demander</Button>)}
+        {!media.inPlex && !media.isRequested && (<Button loading={busy} className="media-ask" onClick={() => requestMedia(media.id)} >Demander</Button>)}
 
       </Button.Group>
 

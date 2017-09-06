@@ -14,6 +14,7 @@ import './Home.css';
 class Home extends React.Component {
   state = {
     search: '',
+    mediaIdAsked: 0,
   }
 
   onType = (e) => {
@@ -32,10 +33,19 @@ class Home extends React.Component {
 
   showResults = () => {
     const { searchSuccess, searchResults } = this.props;
+    const { requestSuccess, user, requestLoading } = this.props;
     if (searchSuccess && searchResults.total_results > 0) {
-      return searchResults.results.map(media => (
-        <MediaCard key={media.id} requestMedia={this.requestMedia} media={media} />
-      ));
+      return searchResults.results.map((media) => {
+        if (requestSuccess && media.id === this.state.mediaIdAsked) {
+          media.isRequested = true;
+          media.requestedBy = user.username;
+          media.requestedAt = (new Date()).toJSON();
+        }
+        const busy = requestLoading && media.id === this.state.mediaIdAsked;
+        return (
+          <MediaCard busy={busy} key={media.id} requestMedia={this.requestMedia} media={media} />
+        );
+      });
     }
     return '';
   }
@@ -48,13 +58,13 @@ class Home extends React.Component {
   }
 
   requestMedia = (mediaId) => {
+    this.setState({ mediaIdAsked: mediaId });
     this.props.request(mediaId);
   }
 
   render() {
     const { search } = this.state;
     const { searchLoading, searchSuccess, searchResults } = this.props;
-    const { requestLoading, requestSuccess } = this.props;
     return (
       <Grid
         className="full-height homepage"
@@ -98,6 +108,9 @@ Home.propTypes = {
   search: PropTypes.func.isRequired,
   searchSuccess: PropTypes.bool.isRequired,
   searchResults: PropTypes.object.isRequired,
+  requestSuccess: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  requestLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -105,6 +118,11 @@ const mapStateToProps = state => ({
   searchSuccess: state.search.searchSuccess,
   searchResults: state.search.result,
   searchFailed: state.search.searchFailed,
+
+  requestLoading: state.request.requestLoading,
+  requestSuccess: state.request.requestSuccess,
+
+  user: state.app.user,
 });
 
 const mapDispatchToProps = dispatch => ({
