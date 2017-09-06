@@ -54,7 +54,7 @@ const MediaCard = ({ busy, media, requestMedia }) => (
         > C&apos;est déjà présent sur le plex, impossible de le demander
         </Popup>)}
 
-        {media.isRequested && (<Popup
+        {media.isRequested && !media.inPlex && (<Popup
           trigger={<Button className="media-ask-disabled">Demander</Button>}
         > La demande a déjà été faite
         </Popup>)}
