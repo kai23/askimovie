@@ -26,6 +26,14 @@ const MediaCard = ({ media, requestMedia }) => (
             Plex
           </span>
         )}
+        {media.isRequested && (
+          <Popup
+            trigger={<span className={'media-requested'}>Demandé</span>}
+          > La demande a été faite par {media.requestedBy} le {format(media.requestedAt, 'DD/MM/YYYY')}
+          </Popup>
+
+
+        )}
       </div>
       <span className="media-title">
         {media.title || media.name || media.original_name}
@@ -48,7 +56,7 @@ const MediaCard = ({ media, requestMedia }) => (
 
         {media.isRequested && (<Popup
           trigger={<Button className="media-ask-disabled">Demander</Button>}
-        > La demande a déjà été faite par <b>{media.requestedBy}</b> le <b>{format(media.requestedAt, 'DD/MM/YYYY')}</b>. Merci de patienter :)
+        > La demande a déjà été faite
         </Popup>)}
 
         {!media.inPlex && !media.isRequested && (<Button className="media-ask" onClick={() => requestMedia(media.id)} >Demander</Button>)}
@@ -60,7 +68,24 @@ const MediaCard = ({ media, requestMedia }) => (
 );
 
 MediaCard.propTypes = {
-  media: PropTypes.object.isRequired,
+  media: PropTypes.shape({
+    first_air_date: PropTypes.string,
+    id: PropTypes.number,
+    inPlex: PropTypes.bool,
+    isRequested: PropTypes.bool,
+    media_type: PropTypes.string,
+    name: PropTypes.string,
+    original_name: PropTypes.string,
+    original_title: PropTypes.string,
+    poster_full_path: PropTypes.string,
+    release_date: PropTypes.string,
+    requestedAt: PropTypes.string,
+    requestedBy: PropTypes.string,
+    title: PropTypes.string,
+    vote_average: PropTypes.number,
+    vote_count: PropTypes.number,
+  }).isRequired,
+  requestMedia: PropTypes.func.isRequired,
 };
 
 export default MediaCard;

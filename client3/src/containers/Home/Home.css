@@ -95,6 +95,18 @@
   display: block;
 }
 
+.media-requested {
+  border: 1px #364DDA solid;
+  text-align: center;
+  width: 50px;
+  padding: 5px 10px;
+  color: #364DDA;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  margin-left: 10px;
+}
+
 .media-type-tv {
   border: 1px green solid;
   text-align: center;
@@ -159,7 +171,7 @@
   cursor: inherit;
 }
 
-.media-inPlex:hover {
+.media-inPlex:hover, .media-requested:hover {
   cursor: pointer;
 }
 
