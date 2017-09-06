@@ -48,7 +48,6 @@ class Home extends React.Component {
   }
 
   requestMedia = (mediaId) => {
-    console.log('mediaId', mediaId);
     this.props.request(mediaId);
   }
 

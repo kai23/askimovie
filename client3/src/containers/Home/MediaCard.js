@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import format from 'date-fns/format';
 
 import { Grid, Rating, Image, Button, Popup } from 'semantic-ui-react';
 
@@ -40,12 +41,17 @@ const MediaCard = ({ media, requestMedia }) => (
       <Button.Group>
         <Button basic color="orange" inverted>Plus d&apos;infos</Button>
         <Button.Or text="ou" />
-        {media.inPlex ? (
-          <Popup
-            trigger={<Button className="media-ask-disabled">Demander</Button>}
-          > C&apos;est déjà présent sur le plex, impossible de le demander
-          </Popup>
-        ) : (<Button className="media-ask" onClick={() => requestMedia(media.id)} >Demander</Button>)}
+        {media.inPlex && (<Popup
+          trigger={<Button className="media-ask-disabled">Demander</Button>}
+        > C&apos;est déjà présent sur le plex, impossible de le demander
+        </Popup>)}
+
+        {media.isRequested && (<Popup
+          trigger={<Button className="media-ask-disabled">Demander</Button>}
+        > La demande a déjà été faite par <b>{media.requestedBy}</b> le <b>{format(media.requestedAt, 'DD/MM/YYYY')}</b>. Merci de patienter :)
+        </Popup>)}
+
+        {!media.inPlex && !media.isRequested && (<Button className="media-ask" onClick={() => requestMedia(media.id)} >Demander</Button>)}
 
       </Button.Group>
 

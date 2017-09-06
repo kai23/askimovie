@@ -19,6 +19,7 @@ module.exports = async (req, res, next) => {
       thumb: user.thumb,
       authToken: user.authToken,
     };
+    await knex('user').insert({ uuid: user.uuid, title: user.title, email: user.email });
     const sid = Math.random().toString(36).slice(-6);
     req.session.sid = sid;
     res.cookie(cookieConfig.name, sid, { maxAge: remember ? cookieConfig.long : cookieConfig.short });

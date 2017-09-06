@@ -12,6 +12,12 @@ exports.up = function (knex, Promise) {
     table.integer('media_id');
     table.string('status');
     table.timestamps();
+  })).then(() => knex.schema.createTable('user', (table) => {
+    table.increments();
+    table.string('uuid');
+    table.string('title');
+    table.string('email');
+    table.timestamps();
   }));
 };
 

@@ -35,7 +35,9 @@ module.exports = async (req, res, next) => {
     const mdbConfig = await getConfiguration();
     const foundPlex = await searchPlex(query);
     const found = await search(query);
-    const request = await knex('request').then(r => uniq(r.map(r2 => r2.media_id)));
+    const request = await knex('request')
+                            .join('user', { 'user.uuid': 'request.user_id' })
+                            .select('user.title', 'request.media_id', 'request.created_at');
 
     const resultsMerged = found.results.filter((f) => {
       const plexMatch = foundPlex.filter((fp) => {
@@ -52,8 +54,11 @@ module.exports = async (req, res, next) => {
       });
 
       f.isRequested = false;
-      if (request.indexOf(f.id) !== -1) {
+      const requestMatch = request.filter(r => r.media_id === f.id);
+      if (requestMatch.length) {
         f.isRequested = true;
+        f.requestedAt = requestMatch[0].created_at;
+        f.requestedBy = requestMatch[0].title;
       }
 
       f.inPlex = false;
