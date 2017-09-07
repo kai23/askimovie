@@ -57,9 +57,9 @@ class Home extends React.Component {
     return '';
   }
 
-  requestMedia = (mediaId) => {
+  requestMedia = (mediaId, mediaType) => {
     this.setState({ mediaIdAsked: mediaId });
-    this.props.request(mediaId);
+    this.props.request(mediaId, mediaType);
   }
 
   render() {
@@ -127,7 +127,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   search: query => dispatch(searchAction(query)),
-  request: mediaId => dispatch(requestAction(mediaId)),
+  request: (mediaId, mediaType) => dispatch(requestAction(mediaId, mediaType)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

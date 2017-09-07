@@ -59,7 +59,7 @@ const MediaCard = ({ busy, media, requestMedia }) => (
         > La demande a déjà été faite
         </Popup>)}
 
-        {!media.inPlex && !media.isRequested && (<Button loading={busy} className="media-ask" onClick={() => requestMedia(media.id)} >Demander</Button>)}
+        {!media.inPlex && !media.isRequested && (<Button loading={busy} className="media-ask" onClick={() => requestMedia(media.id, media.media_type)} >Demander</Button>)}
 
       </Button.Group>
 

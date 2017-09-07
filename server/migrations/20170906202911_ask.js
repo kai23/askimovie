@@ -4,6 +4,7 @@ exports.up = function (knex, Promise) {
     table.increments();
     table.string('user_id');
     table.integer('media_id');
+    table.string('media_type');
     table.string('status');
     table.string('seasons');
     table.timestamps();
@@ -22,5 +23,7 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTable('request');
+  return knex.schema.dropTable('request')
+  .then(() => knex.schema.dropTable('request_workflow'))
+  .then(() => knex.schema.dropTable('user'));
 };
